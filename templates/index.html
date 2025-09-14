@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preguntas & Respuestas</title>
+    <link rel="icon" href="{{ url_for('static', filename='img/preguntas.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <main>
+        <div class="contenedor">
+            <h1>Preguntas & Respuestas</h1>
+            {% if categoria_aleatoria == "Geografia" %}
+            <div class="contenedor_preguntas" style="background-color: hsl(120, 24%, 50%);">
+            {% elif categoria_aleatoria == "Literatura" %}
+            <div class="contenedor_preguntas" style="background-color: #800080;">
+            {% elif categoria_aleatoria == "Historia" %}
+            <div class="contenedor_preguntas" style="background-color: #a1551f;">
+            {% elif categoria_aleatoria == "Ciencia" %}
+            <div class="contenedor_preguntas" style="background-color: #0d68b3;">
+            {% elif categoria_aleatoria == "Arte" %}
+            <div class="contenedor_preguntas" style="background-color: #b89c01;">
+            {% elif categoria_aleatoria == "Deporte" %}
+            <div class="contenedor_preguntas" style="background-color: #960000;">
+            {% elif categoria_aleatoria == "Algebra" %}
+            <div class="contenedor_preguntas" style="background-color: #754512;">
+            {% else %}
+            <div class="contenedor_preguntas" style="background-color: rgba(0, 0, 0, 0.5);">
+            {% endif %}
+                <form action="/comprobar" method="post">
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% for category, mensaje in messages %}
+                            <div id="alerta" class="alerta {{ category }}">
+                                {{ mensaje }}
+                            </div>
+                        {% endfor %}
+                    {% endwith %}
+                    <div id="reloj-puntuacion" class="reloj-puntuacion">
+                        <div id="reloj" class="reloj">
+                            <div id="tiempo-restante" class="tiempo-restante">
+                                0
+                            </div>
+                        </div>
+                        <div class="puntuacion">
+                            <span>Puntos: {{ puntuacion }}</span>
+                        </div>
+                    </div>
+                    <h2 class="pregunta">{{ pregunta.pregunta }}</h2>
+                    <div class="contenedor_imagen">
+                        <img src="{{ icono_categoria }}" alt="Imagen de la pregunta" class="imagen-pregunta">
+                    </div>
+                    <input type="hidden" id="respuesta_correcta" name="respuesta_correcta" value="{{ respuesta_correcta }}">
+                    <ul class="respuestas">
+                        {% for respuesta in pregunta['respuestas'] %}
+                            <li class="respuesta" onclick="seleccionar(this)">
+                                <input type="radio" id="respuesta" name="respuesta" value="{{ respuesta }}">
+                                {{ respuesta }}
+                            </li>
+                            {% endfor %}
+                        </ul>
+                </form>
+                <div class='navegacion'>
+                    <ul>
+                        <li class="lista">
+                            <a href="{{ url_for('index') }}">
+                                <span class="icono">
+                                    <img src="{{ url_for('static', filename='img/aleatorio.png') }}" alt="ALEATORIO">
+                                </span>
+                            </a>
+                        </li>
+                        <li class="lista">
+                            <a href="{{ url_for('index', categoria='Geografia') }}">
+                                <span class="icono">
+                                    <img src="{{ url_for('static', filename='img/geografia.png') }}" alt="GEOGRAFIA">
+                                </span>
+                            </a>
+                        </li>
+                        <li class="lista">
+                            <a href="{{ url_for('index', categoria='Literatura') }}">
+                                <span class="icono">
+                                    <img src="{{ url_for('static', filename='img/literatura.png') }}" alt="LITERATURA">
+                                </span>
+                            </a>
+                        </li>
+                        <li class="lista">
+                            <a href="{{ url_for('index', categoria='Historia') }}">
+                                <span class="icono">
+                                    <img src="{{ url_for('static', filename='img/historia.png') }}" alt="HISTORIA">
+                                </span>
+                            </a>
+                        </li>
+                        <li class="lista">
+                            <a href="{{ url_for('index', categoria='Ciencia') }}">
+                                <span class="icono">
+                                    <img src="{{ url_for('static', filename='img/ciencia.png') }}" alt="CIENCIA">
+                                </span>
+                            </a>
+                        </li>
+                        <li class="lista">
+                            <a href="{{ url_for('index', categoria='Arte') }}">
+                                <span class="icono">
+                                    <img src="{{ url_for('static', filename='img/arte.png') }}" alt="ARTE">
+                                </span>
+                            </a>
+                        </li>
+                        <li class="lista">
+                            <a href="{{ url_for('index', categoria='Deporte') }}">
+                                <span class="icono">
+                                    <img src="{{ url_for('static', filename='img/deporte.png') }}" alt="DEPORTE">
+                                </span>
+                            </a>
+                        </li>
+                        <li class="lista">
+                            <a href="{{ url_for('index', categoria='Algebra') }}">
+                                <span class="icono">
+                                    <img src="{{ url_for('static', filename='img/algebra.png') }}" alt="ALGEBRA">
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>    
+    </main>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
