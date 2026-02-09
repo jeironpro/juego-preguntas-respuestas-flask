@@ -1,4 +1,4 @@
-# preguntas-respuestas-flask
+# juego-preguntas-respuestas-flask
 
 ## 📌 Descripción
 Este proyecto forma parte de mi portafolio personal.  
